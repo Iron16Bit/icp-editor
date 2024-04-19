@@ -185,7 +185,7 @@
                                 ></strong
                             >
                             - this option should be used if you intend to host the
-                            slides on your own server. In this case you will need
+                            slides on your own server or though the mobile app. In the first case you will need
                             to:
                             <ul
                                 class="text-lg m-2 list-disc"
@@ -210,6 +210,7 @@
                                     server
                                 </li>
                             </ul>
+                            In the latter, only the HTML is needed.
                         </li>
                     </ul>
                 </div>
