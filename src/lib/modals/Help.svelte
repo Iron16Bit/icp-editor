@@ -181,7 +181,7 @@
                             style="margin: 0 !important; padding: 0 !important;"
                         >
                             <strong
-                                ><span class="emph">Export for server"</span
+                                ><span class="emph">Export for hosting or app"</span
                                 ></strong
                             >
                             - this option should be used if you intend to host the

@@ -62,7 +62,7 @@
         >
             <Close color={$darkTheme ? "white" : "black"} />
         </div>
-        <div class="flex flex-row justify-evenly">
+        <div class="flex flex-row" style="gap: 50px">
             <div class="flex-1 flex flex-col items-center justify-around">
                 <div
                     on:click={() => exportHTML(true)}
@@ -72,8 +72,7 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center">
                     <p class="w-9/12 py-5 text-primary text-center text-base">
-                        Single HTML file, only working with an internet
-                        connection
+                        Online
                     </p>
                 </div>
             </div>
@@ -86,8 +85,7 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center">
                     <p class="w-9/12 py-5 text-primary text-center text-base">
-                        Single executable file, working without an internet
-                        connection
+                        Offline
                     </p>
                 </div>
             </div>
@@ -103,7 +101,7 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center">
                     <p class="w-9/12 py-5 text-primary text-center text-base">
-                        Export the slides for self-hosting
+                        Hosting and App
                     </p>
                 </div>
             </div>
