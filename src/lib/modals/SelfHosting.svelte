@@ -10,7 +10,7 @@
 	import bundle from 'icp-bundle/dist/base/full-offline.iife.js?raw';
     import utilsZip from '../../assets/utils.zip?url';
     import { saveAs } from "file-saver";
-    import Exporter from "../../classes/Exporter";
+    import Exporter from "../../classes/ExporterHosting";
 
     /**
      * Save the slides as an HTML file
