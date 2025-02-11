@@ -3,6 +3,7 @@
     import LayoutBody from "./layouts/Layout-Body.svelte";
     import LayoutColumns from "./layouts/Layout-Columns.svelte";
     import { Layouts, LayoutsNames, type Language } from "../../types";
+    import { writable } from 'svelte/store';
 
     import {
         currentLanguage,
@@ -39,12 +40,14 @@
      * Reset the state of the application
      */
     function reset() {
-        revealSlides.set([[new Slide(0, 0, "python", Layouts.MAIN)]]);
+        revealSlides.set([[new Slide(0, 0, "javascript", Layouts.MAIN)]]);
         $RevealInstance.slide(0, 0);
         setTimeout(() => {
             $RevealInstance.sync();
         }, 100);
     }
+
+    let availableLanguages = ["javascript", "typescript", "sql", "p5", "processing"];
 
     /**
      * Change the current default language. Calling this function will:
@@ -53,19 +56,56 @@
      * 
      * @param {MouseEvent} event event that triggered the function
      */
+    
     function setCurrentLanguage(event: MouseEvent): void {
         // Get the selected language
         $currentLanguage = (
             event.target as HTMLLinkElement
-        ).textContent.toLowerCase() as Language;
+        ).textContent.replace(/\s[✅❌]/, '').toLowerCase() as Language;
 
-        // Change the programming language used in the current slide
-        $revealSlides[$currentSlideH][$currentSlideV].setLanguage(
-            $currentLanguage
-        );
+        // Check if the language is available
+        if (!availableLanguages.includes($currentLanguage)) {
+            // It is not available, request it
+            var langSize = "";
+            switch ($currentLanguage) {
+                case "python":
+                    langSize = "21.3"
+                    break;
+                case "java":
+                    langSize = "12.3"
+                    break;
+                case "cpp":
+                    langSize = "58.1"
+                    break;
+                default:
+                    console.warn("Language not recognized");
+                    break;
+            }
+            let printString = 'You will need to import up to ' + langSize + ' MB. Is that ok?';
+            if (window.confirm(printString)) {
+                localStorage.setItem('importedLanguage', JSON.stringify($currentLanguage));
+                availableLanguages = [...availableLanguages, $currentLanguage];
+            }
+        } else {
+            // Change the programming language used in the current slide
+            $revealSlides[$currentSlideH][$currentSlideV].setLanguage(
+                $currentLanguage
+            );
 
-        revealSlides.set($revealSlides);
+            revealSlides.set($revealSlides);
+        }
     }
+
+    // function updateNavbar() {
+    //     const resultLang = localStorage.getItem('resultLanguage');
+    //     if(resultLang)
+    //     var readLanguage = JSON.parse(resultLang);
+    //     if (!availableLanguages.includes(resultLang)) {
+    //         availableLanguages = [...availableLanguages, resultLang];
+    //     }
+    // }
+
+    // setInterval(updateNavbar, 1000); // Check for updates every second
 </script>
 
 <nav class="flex flex-row items-center justify-between h-[30px] bg-primary text-black dark:text-white">
@@ -142,35 +182,35 @@
                 >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Python</button
+                        on:click={setCurrentLanguage}>Python {availableLanguages.includes("python") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Typescript</button
+                        on:click={setCurrentLanguage}>Typescript {availableLanguages.includes("typescript") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Javascript</button
+                        on:click={setCurrentLanguage}>Javascript {availableLanguages.includes("javascript") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Java</button
+                        on:click={setCurrentLanguage}>Java {availableLanguages.includes("java") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Cpp</button
+                        on:click={setCurrentLanguage}>Cpp {availableLanguages.includes("cpp") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Sql</button
+                        on:click={setCurrentLanguage}>Sql {availableLanguages.includes("sql") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>P5</button
+                        on:click={setCurrentLanguage}>P5 {availableLanguages.includes("p5") ? '✅' : '❌'}</button
                     >
                     <button
                         class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Processing</button
+                        on:click={setCurrentLanguage}>Processing {availableLanguages.includes("processing") ? '✅' : '❌'}</button
                     >
                 </div>
             </div>
