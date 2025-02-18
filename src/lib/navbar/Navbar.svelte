@@ -61,10 +61,10 @@
         // Get the selected language
         $currentLanguage = (
             event.target as HTMLLinkElement
-        ).textContent.replace(/\s[✅❌]/, '').toLowerCase() as Language;
+        ).textContent.replace(/\s[✅📥]/, '').toLowerCase() as Language;
 
         // Check if the language is available
-        if (!availableLanguages.includes($currentLanguage)) {
+        if (!availableLanguages.includes($currentLanguage) && ["python","java","cpp"].includes($currentLanguage)) {
             // It is not available, request it
             var langSize = "";
             switch ($currentLanguage) {
@@ -180,38 +180,15 @@
                 <div
                     class="dropdown-content absolute m-0 bg-primary-light hidden flex flex-col z-50 group-hover:flex"
                 >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Python {availableLanguages.includes("python") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Typescript {availableLanguages.includes("typescript") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Javascript {availableLanguages.includes("javascript") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Java {availableLanguages.includes("java") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Cpp {availableLanguages.includes("cpp") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Sql {availableLanguages.includes("sql") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>P5 {availableLanguages.includes("p5") ? '✅' : '❌'}</button
-                    >
-                    <button
-                        class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9]"
-                        on:click={setCurrentLanguage}>Processing {availableLanguages.includes("processing") ? '✅' : '❌'}</button
-                    >
+                    {#each ["python", "typescript", "javascript", "java", "cpp", "sql", "p5", "processing"] as lang}
+                        <button
+                            class="p-1 text-sm text-black float-none text-left no-underline hover:bg-secondary hover:text-[#f9f9f9] flex items-center gap-2"
+                            on:click={setCurrentLanguage}
+                        >
+                            <span class="flex-1 capitalize">{lang}</span>
+                            <span>{availableLanguages.includes(lang) ? '✅' : '📥'}</span>
+                        </button>
+                    {/each}
                 </div>
             </div>
         </div>
